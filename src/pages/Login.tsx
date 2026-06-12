@@ -1,12 +1,14 @@
 import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { setRememberMe } from '../lib/supabase'
 
 export function Login() {
   const { signIn } = useAuth()
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [remember, setRemember] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
@@ -15,6 +17,7 @@ export function Login() {
     setError(null)
     setLoading(true)
     try {
+      setRememberMe(remember)
       await signIn(email, password)
       navigate('/')
     } catch (err) {
@@ -56,6 +59,16 @@ export function Login() {
             className="w-full bg-surface border border-white/10 rounded px-3 py-2 focus:outline-none focus:border-accent"
           />
         </div>
+
+        <label className="flex items-center gap-2 text-sm text-text-muted cursor-pointer">
+          <input
+            type="checkbox"
+            checked={remember}
+            onChange={(e) => setRemember(e.target.checked)}
+            className="cursor-pointer"
+          />
+          Remember me
+        </label>
 
         {error && <p className="text-sm text-red-400">{error}</p>}
 
