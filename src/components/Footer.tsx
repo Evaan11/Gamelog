@@ -13,9 +13,8 @@ export function Footer() {
           rel="noopener noreferrer"
           className="flex items-center gap-1.5 hover:text-text transition-colors"
         >
-          <svg width="20" height="20" viewBox="0 0 569 546" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
-            <circle cx="362.589" cy="204.518" r="204.518" />
-            <rect x="0" y="0" width="100" height="545.792" />
+          <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+            <path d="M0 .48v23.04h4.22V.48H0zm15.385 0c-4.764 0-8.629 3.862-8.629 8.626 0 4.755 3.865 8.626 8.629 8.626 4.75 0 8.615-3.871 8.615-8.626C24 4.342 20.135.48 15.385.48z" />
           </svg>
           Support on Patreon
         </a>
