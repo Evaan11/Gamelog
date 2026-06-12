@@ -13,10 +13,10 @@ export function Footer() {
           rel="noopener noreferrer"
           className="flex items-center gap-1.5 hover:text-text transition-colors"
         >
-          <span
-            className="inline-block w-[18px] h-[18px] bg-current"
-            style={{ borderRadius: '63% 63% 63% 0%', transform: 'rotate(-15deg)' }}
-          />
+          <svg width="20" height="20" viewBox="0 0 569 546" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+            <circle cx="362.589" cy="204.518" r="204.518" />
+            <rect x="0" y="0" width="100" height="545.792" />
+          </svg>
           Support on Patreon
         </a>
       </div>
