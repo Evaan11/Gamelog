@@ -7,6 +7,14 @@ export function Footer() {
         <Link to="/legal" className="hover:text-text transition-colors">
           Legal notice & privacy policy
         </Link>
+        <a
+          href="https://patreon.com/gameloggd"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-text transition-colors"
+        >
+          Support on Patreon
+        </a>
       </div>
     </footer>
   )
