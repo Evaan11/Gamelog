@@ -13,7 +13,7 @@ export function Footer() {
           rel="noopener noreferrer"
           className="flex items-center gap-1.5 hover:text-text transition-colors"
         >
-          <svg width="14" height="14" viewBox="0 0 569 546" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+          <svg width="20" height="20" viewBox="0 0 569 546" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
             <circle cx="362.589" cy="204.518" r="204.518" />
             <rect x="0" y="0" width="100" height="545.792" />
           </svg>
