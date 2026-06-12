@@ -169,18 +169,16 @@ export function ReviewCard({
                     Delete review
                   </button>
                 )}
-                {!isOwn && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setMenuOpen(false)
-                      setShowReportModal(true)
-                    }}
-                    className="w-full text-left px-3 py-2 text-sm text-text-muted hover:bg-white/5 hover:text-text transition-colors cursor-pointer"
-                  >
-                    Report review
-                  </button>
-                )}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMenuOpen(false)
+                    setShowReportModal(true)
+                  }}
+                  className="w-full text-left px-3 py-2 text-sm text-text-muted hover:bg-white/5 hover:text-text transition-colors cursor-pointer"
+                >
+                  Report review
+                </button>
               </div>
             )}
           </div>

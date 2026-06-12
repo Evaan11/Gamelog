@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { browseGames } from '../lib/igdb'
 import { getPopularReviewsThisWeek, type PopularReview } from '../lib/games'
+import { deleteReview } from '../lib/entries'
 import { coverUrl } from '../lib/igdb'
 import { ReviewCard } from '../components/ReviewCard'
 import type { IgdbGame } from '../types/igdb'
@@ -128,6 +129,12 @@ export function Landing() {
                 platform={r.platform}
                 timeToFinishMinutes={r.time_to_finish_minutes}
                 likeCount={r.likeCount}
+                isOwn={user?.id === r.user_id}
+                onDelete={() => {
+                  deleteReview(r.user_id, r.games.id).then(() => {
+                    setPopularReviews((rs) => rs.filter((rev) => rev.id !== r.id))
+                  })
+                }}
               />
             ))}
           </div>

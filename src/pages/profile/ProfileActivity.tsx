@@ -8,6 +8,7 @@ import {
   type ActivityEntry,
 } from '../../lib/activity'
 import { ReviewCard } from '../../components/ReviewCard'
+import { deleteReview } from '../../lib/entries'
 import { coverUrl } from '../../lib/igdb'
 import { displayName } from '../../lib/profiles'
 import { follow, unfollow, isFollowing } from '../../lib/follows'
@@ -276,6 +277,12 @@ export function ProfileActivity() {
                   review={entry.review}
                   date={entry.updated_at}
                   author={entry.profiles}
+                  isOwn={user?.id === entry.user_id}
+                  onDelete={() => {
+                    deleteReview(entry.user_id, entry.games.id).then(() => {
+                      setFeed((f) => f.filter((e) => e.id !== entry.id))
+                    })
+                  }}
                 />
               ) : (
                 <Link
