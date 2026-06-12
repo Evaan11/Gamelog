@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { browseGames } from '../lib/igdb'
 import { getPopularReviewsThisWeek, type PopularReview } from '../lib/games'
@@ -9,8 +9,10 @@ import type { IgdbGame } from '../types/igdb'
 
 export function Landing() {
   const { user } = useAuth()
+  const navigate = useNavigate()
   const [recentGames, setRecentGames] = useState<IgdbGame[]>([])
   const [popularReviews, setPopularReviews] = useState<PopularReview[]>([])
+  const [query, setQuery] = useState('')
 
   useEffect(() => {
     browseGames('recent', 0)
@@ -49,6 +51,34 @@ export function Landing() {
             </Link>
           </div>
         )}
+      </section>
+
+      <section className="pb-16 max-w-md mx-auto">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            if (query.trim()) navigate(`/search?q=${encodeURIComponent(query.trim())}`)
+          }}
+          className="relative"
+        >
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search your games..."
+            className="w-full bg-surface border border-white/10 rounded px-4 py-2 pr-9 text-sm focus:outline-none focus:border-accent"
+          />
+          <button
+            type="submit"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text cursor-pointer"
+            aria-label="Search"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+          </button>
+        </form>
       </section>
 
       {recentGames.length > 0 && (

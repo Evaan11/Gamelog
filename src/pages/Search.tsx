@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { searchGames } from '../lib/igdb'
 import type { IgdbGame } from '../types/igdb'
 import { GameCard } from '../components/GameCard'
 import { getGameStatsBatch, type GameStats } from '../lib/games'
 
 export function Search() {
-  const [query, setQuery] = useState('')
+  const [searchParams] = useSearchParams()
+  const [query, setQuery] = useState(searchParams.get('q') ?? '')
   const [results, setResults] = useState<IgdbGame[]>([])
   const [stats, setStats] = useState<Map<number, GameStats>>(new Map())
   const [loading, setLoading] = useState(false)
