@@ -1,19 +1,22 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
-import { browseGames, searchGames, type BrowseSort } from '../lib/igdb'
+import { browseGames, searchGames, getGamesByIds, type BrowseSort } from '../lib/igdb'
 import { GENRES, THEMES, PLATFORMS } from '../lib/filters'
 import { StarRating } from '../components/StarRating'
 import type { IgdbGame } from '../types/igdb'
 import { GameCard } from '../components/GameCard'
-import { getGameStatsBatch, type GameStats } from '../lib/games'
+import { getGameStatsBatch, getGamesByAvgPlaytime, type GameStats } from '../lib/games'
 
-const SORT_LABELS: Record<BrowseSort, string> = {
+type SortOption = BrowseSort | 'avg_playtime'
+
+const SORT_LABELS: Record<SortOption, string> = {
   popular: 'Most popular',
   alphabetical: 'Alphabetical',
   top_rated: 'Top rated',
+  avg_playtime: 'Avg playtime',
 }
 
-const SORT_OPTIONS: BrowseSort[] = ['popular', 'top_rated', 'alphabetical']
+const SORT_OPTIONS: SortOption[] = ['popular', 'top_rated', 'avg_playtime', 'alphabetical']
 const PAGE_SIZE = 50
 
 function MultiSelect({
@@ -81,7 +84,7 @@ export function Games() {
   const urlGenreId = searchParams.get('genreId') ? Number(searchParams.get('genreId')) : undefined
   const urlThemeId = searchParams.get('themeId') ? Number(searchParams.get('themeId')) : undefined
   const urlPlatformId = searchParams.get('platformId') ? Number(searchParams.get('platformId')) : undefined
-  const [sort, setSort] = useState<BrowseSort>('popular')
+  const [sort, setSort] = useState<SortOption>('popular')
   const [genreIds, setGenreIds] = useState<number[]>(urlGenreId != null ? [urlGenreId] : [])
   const [themeIds, setThemeIds] = useState<number[]>(urlThemeId != null ? [urlThemeId] : [])
   const [platformIds, setPlatformIds] = useState<number[]>(urlPlatformId != null ? [urlPlatformId] : [])
@@ -89,6 +92,7 @@ export function Games() {
   const [page, setPage] = useState(0)
   const [games, setGames] = useState<IgdbGame[]>([])
   const [stats, setStats] = useState<Map<number, GameStats>>(new Map())
+  const [avgPlaytimes, setAvgPlaytimes] = useState<Map<number, number>>(new Map())
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [query, setQuery] = useState('')
@@ -128,7 +132,17 @@ export function Games() {
 
     const request = activeQuery.trim()
       ? searchGames(activeQuery)
-      : browseGames(sort, page * PAGE_SIZE, { genreIds, themeIds, platformIds, minRating })
+      : sort === 'avg_playtime'
+        ? getGamesByAvgPlaytime(page * PAGE_SIZE, PAGE_SIZE).then(async (rows) => {
+            const fetched = await getGamesByIds(rows.map((r) => r.gameId))
+            const byId = new Map(fetched.map((g) => [g.id, g]))
+            const playtimes = new Map(rows.map((r) => [r.gameId, r.avgPlaytimeMinutes]))
+            if (!cancelled) setAvgPlaytimes(playtimes)
+            return rows.map((r) => byId.get(r.gameId)).filter((g): g is IgdbGame => g != null)
+          })
+        : browseGames(sort, page * PAGE_SIZE, { genreIds, themeIds, platformIds, minRating })
+
+    if (sort !== 'avg_playtime') setAvgPlaytimes(new Map())
 
     request
       .then((g) => {
@@ -188,7 +202,7 @@ export function Games() {
           <select
             value={sort}
             onChange={(e) => {
-              setSort(e.target.value as BrowseSort)
+              setSort(e.target.value as SortOption)
               setPage(0)
             }}
             className="w-40 bg-surface border border-white/10 rounded text-sm px-3 py-1.5 text-text-muted hover:text-text focus:outline-none focus:border-accent cursor-pointer"
@@ -200,6 +214,8 @@ export function Games() {
             ))}
           </select>
 
+          {sort !== 'avg_playtime' && (
+            <>
           <MultiSelect
             label="All genres"
             options={GENRES}
@@ -241,6 +257,8 @@ export function Games() {
               size={16}
             />
           </div>
+            </>
+          )}
 
           {(genreIds.length > 0 || themeIds.length > 0 || platformIds.length > 0 || minRating != null) && (
             <Link
@@ -326,7 +344,7 @@ export function Games() {
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
           {games.map((game) => (
-            <GameCard key={game.id} game={game} stats={stats.get(game.id)} />
+            <GameCard key={game.id} game={game} stats={stats.get(game.id)} avgPlaytimeMinutes={avgPlaytimes.get(game.id)} />
           ))}
         </div>
       )}

@@ -3,7 +3,17 @@ import type { IgdbGame } from '../types/igdb'
 import { coverUrl } from '../lib/igdb'
 import type { GameStats } from '../lib/games'
 
-export function GameCard({ game, stats, linkSuffix }: { game: IgdbGame; stats?: GameStats; linkSuffix?: string }) {
+export function GameCard({
+  game,
+  stats,
+  linkSuffix,
+  avgPlaytimeMinutes,
+}: {
+  game: IgdbGame
+  stats?: GameStats
+  linkSuffix?: string
+  avgPlaytimeMinutes?: number
+}) {
   const year = game.first_release_date
     ? new Date(game.first_release_date * 1000).getFullYear()
     : null
@@ -31,6 +41,9 @@ export function GameCard({ game, stats, linkSuffix }: { game: IgdbGame; stats?: 
       {year && <p className="text-xs text-text-muted">{year}</p>}
       {game.total_rating != null && (
         <p className="text-xs text-text-muted">Rating: {(game.total_rating / 10).toFixed(1)}</p>
+      )}
+      {avgPlaytimeMinutes != null && (
+        <p className="text-xs text-text-muted">Avg playtime: {(avgPlaytimeMinutes / 60).toFixed(1)}h</p>
       )}
       {game.platforms && game.platforms.length > 0 && (
         <p className="text-[10px] text-text-muted truncate">

@@ -35,7 +35,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { search, id, steamAppId, igdbIdForSteam, browse } = await req.json()
+    const { search, id, ids, steamAppId, igdbIdForSteam, browse } = await req.json()
 
     if (browse) {
       const sortField =
@@ -206,6 +206,11 @@ where uid = "${String(steamAppId).replace(/"/g, '')}" & external_game_source = 1
       }
       body = `fields name, cover.image_id, first_release_date, summary, total_rating, platforms.name, platforms.abbreviation, genres.name, themes.name, involved_companies.company.name, involved_companies.developer, involved_companies.publisher, screenshots.image_id, artworks.image_id;
 where id = ${gameId};`
+    } else if (Array.isArray(ids) && ids.length > 0) {
+      const gameIds = ids.map(Number).filter(Number.isInteger)
+      body = `fields name, cover.image_id, first_release_date, summary, total_rating, platforms.name, platforms.abbreviation, genres.name, themes.name, involved_companies.company.name, involved_companies.developer, involved_companies.publisher, screenshots.image_id, artworks.image_id;
+where id = (${gameIds.join(',')});
+limit ${gameIds.length};`
     } else if (typeof search === 'string' && search.trim()) {
       body = `search "${search.replace(/"/g, '\\"')}";
 fields name, cover.image_id, first_release_date, summary, total_rating, category, platforms.name, platforms.abbreviation, genres.name, themes.name, involved_companies.company.name, involved_companies.developer, involved_companies.publisher, screenshots.image_id, artworks.image_id;

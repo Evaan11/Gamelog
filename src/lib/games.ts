@@ -62,6 +62,18 @@ export async function getGameStatsBatch(gameIds: number[]): Promise<Map<number, 
   return map
 }
 
+export async function getGamesByAvgPlaytime(
+  offset: number,
+  limit: number,
+): Promise<{ gameId: number; avgPlaytimeMinutes: number }[]> {
+  const { data, error } = await supabase.rpc('games_by_avg_playtime', { p_limit: limit, p_offset: offset })
+  if (error) throw error
+  return (data ?? []).map((row: { game_id: number; avg_playtime: number }) => ({
+    gameId: row.game_id,
+    avgPlaytimeMinutes: row.avg_playtime,
+  }))
+}
+
 export interface GameDetailStats {
   avgRating: number | null
   ratingCount: number

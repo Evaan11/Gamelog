@@ -26,6 +26,17 @@ export async function getGame(id: number): Promise<IgdbGame | null> {
   return data?.[0] ?? null
 }
 
+export async function getGamesByIds(ids: number[]): Promise<IgdbGame[]> {
+  if (ids.length === 0) return []
+
+  const { data, error } = await supabase.functions.invoke<IgdbGame[]>('igdb-proxy', {
+    body: { ids },
+  })
+
+  if (error) throw error
+  return data ?? []
+}
+
 export async function getGameBySteamAppId(appId: number): Promise<IgdbGame | null> {
   const { data, error } = await supabase.functions.invoke<IgdbGame[]>('igdb-proxy', {
     body: { steamAppId: appId },
