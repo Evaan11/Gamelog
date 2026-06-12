@@ -84,7 +84,7 @@ export interface PopularReview {
   time_to_finish_minutes: number | null
   likeCount: number
   profiles: Profile
-  games: { id: number; name: string; cover_image_id: string | null; first_release_date: number | null }
+  games: { id: number; name: string; cover_image_id: string | null; first_release_date: string | null }
 }
 
 export async function getPopularReviewsThisWeek(limit = 5): Promise<PopularReview[]> {

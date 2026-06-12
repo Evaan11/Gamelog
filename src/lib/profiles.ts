@@ -49,6 +49,7 @@ export async function updateProfile(
     display_name?: string | null
     avatar_url?: string | null
     steam_id?: string | null
+    steam_last_synced_at?: string | null
     bio?: string | null
     country_code?: string | null
   },

@@ -14,6 +14,7 @@ const SORT_LABELS: Record<SortOption, string> = {
   alphabetical: 'Alphabetical',
   top_rated: 'Top rated',
   avg_playtime: 'Avg playtime',
+  recent: 'Recent',
 }
 
 const SORT_OPTIONS: SortOption[] = ['popular', 'top_rated', 'avg_playtime', 'alphabetical']
