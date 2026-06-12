@@ -1,0 +1,57 @@
+// Common IGDB genre/platform ids used for the Games page filters.
+
+export const GENRES: { id: number; name: string }[] = [
+  { id: 31, name: 'Adventure' },
+  { id: 33, name: 'Arcade' },
+  { id: 35, name: 'Card & Board Game' },
+  { id: 4, name: 'Fighting' },
+  { id: 25, name: 'Hack and slash/Beat \'em up' },
+  { id: 32, name: 'Indie' },
+  { id: 36, name: 'MOBA' },
+  { id: 7, name: 'Music' },
+  { id: 8, name: 'Platform' },
+  { id: 9, name: 'Puzzle' },
+  { id: 10, name: 'Racing' },
+  { id: 11, name: 'Real Time Strategy (RTS)' },
+  { id: 12, name: 'Role-playing (RPG)' },
+  { id: 5, name: 'Shooter' },
+  { id: 13, name: 'Simulator' },
+  { id: 14, name: 'Sport' },
+  { id: 15, name: 'Strategy' },
+  { id: 24, name: 'Tactical' },
+  { id: 16, name: 'Turn-based strategy (TBS)' },
+  { id: 34, name: 'Visual Novel' },
+]
+
+export const THEMES: { id: number; name: string }[] = [
+  { id: 1, name: 'Action' },
+  { id: 17, name: 'Fantasy' },
+  { id: 18, name: 'Science fiction' },
+  { id: 19, name: 'Horror' },
+  { id: 20, name: 'Thriller' },
+  { id: 21, name: 'Survival' },
+  { id: 22, name: 'Historical' },
+  { id: 23, name: 'Stealth' },
+  { id: 27, name: 'Comedy' },
+  { id: 28, name: 'Business' },
+  { id: 31, name: 'Drama' },
+  { id: 32, name: 'Educational' },
+  { id: 33, name: 'Kids' },
+  { id: 34, name: 'Open world' },
+  { id: 35, name: 'Warfare' },
+  { id: 38, name: '4X (explore, expand, exploit, exterminate)' },
+  { id: 39, name: 'Mystery' },
+  { id: 40, name: 'Party' },
+  { id: 41, name: 'Romance' },
+]
+
+export const PLATFORMS: { id: number; name: string }[] = [
+  { id: 6, name: 'PC' },
+  { id: 167, name: 'PlayStation 5' },
+  { id: 48, name: 'PlayStation 4' },
+  { id: 169, name: 'Xbox Series X|S' },
+  { id: 49, name: 'Xbox One' },
+  { id: 130, name: 'Nintendo Switch' },
+  { id: 39, name: 'iOS' },
+  { id: 34, name: 'Android' },
+]
