@@ -26,34 +26,7 @@ export function Landing() {
 
   return (
     <div className="max-w-7xl mx-auto px-4">
-      <section className="py-24 text-center max-w-2xl mx-auto">
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-          Track every game you play.
-        </h1>
-        <p className="text-text-muted text-lg mb-8">
-          Log what you've finished, rate it, write a review, and see what your friends are
-          playing. Like Letterboxd, but for games.
-        </p>
-
-        {!user && (
-          <div className="flex items-center justify-center gap-3">
-            <Link
-              to="/signup"
-              className="bg-accent text-bg font-semibold px-6 py-3 rounded-lg hover:opacity-90 transition-opacity"
-            >
-              Get started
-            </Link>
-            <Link
-              to="/login"
-              className="border border-white/15 px-6 py-3 rounded-lg hover:bg-surface-hover transition-colors"
-            >
-              Sign in
-            </Link>
-          </div>
-        )}
-      </section>
-
-      <section className="pb-16 max-w-md mx-auto">
+      <section className="pt-10 max-w-md mx-auto">
         <form
           onSubmit={(e) => {
             e.preventDefault()
@@ -79,6 +52,33 @@ export function Landing() {
             </svg>
           </button>
         </form>
+      </section>
+
+      <section className="py-24 text-center max-w-2xl mx-auto">
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
+          Track every game you play.
+        </h1>
+        <p className="text-text-muted text-lg mb-8">
+          Log what you've finished, rate it, write a review, and see what your friends are
+          playing. Like Letterboxd, but for games.
+        </p>
+
+        {!user && (
+          <div className="flex items-center justify-center gap-3">
+            <Link
+              to="/signup"
+              className="bg-accent text-bg font-semibold px-6 py-3 rounded-lg hover:opacity-90 transition-opacity"
+            >
+              Get started
+            </Link>
+            <Link
+              to="/login"
+              className="border border-white/15 px-6 py-3 rounded-lg hover:bg-surface-hover transition-colors"
+            >
+              Sign in
+            </Link>
+          </div>
+        )}
       </section>
 
       {recentGames.length > 0 && (
