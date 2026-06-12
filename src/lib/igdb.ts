@@ -59,7 +59,7 @@ export function coverUrl(imageId: string, size: 'cover_small' | 'cover_big' | 's
   return `https://images.igdb.com/igdb/image/upload/t_${size}/${imageId}.jpg`
 }
 
-export type BrowseSort = 'popular' | 'alphabetical' | 'top_rated'
+export type BrowseSort = 'popular' | 'alphabetical' | 'top_rated' | 'recent'
 
 export interface BrowseFilters {
   genreIds?: number[]

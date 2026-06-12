@@ -43,7 +43,9 @@ Deno.serve(async (req) => {
           ? 'name asc'
           : browse.sort === 'top_rated'
             ? 'total_rating desc'
-            : 'total_rating_count desc'
+            : browse.sort === 'recent'
+              ? 'first_release_date desc'
+              : 'total_rating_count desc'
       const offset = Number(browse.offset) || 0
       const token = await getTwitchToken()
       const genreIds = (Array.isArray(browse.genreIds) ? browse.genreIds : []).map(Number).filter(Number.isInteger)
@@ -54,8 +56,10 @@ Deno.serve(async (req) => {
       const platformFilter = platformIds.length > 0 ? ` & platforms = (${platformIds.join(',')})` : ''
       const minRating = Number(browse.minRating)
       const ratingFilter = Number.isFinite(minRating) && minRating > 0 ? ` & total_rating >= ${minRating}` : ''
+      const recentFilter =
+        browse.sort === 'recent' ? ` & first_release_date <= ${Math.floor(Date.now() / 1000)} & total_rating_count > 20` : ''
       const body = `fields name, cover.image_id, first_release_date, summary, total_rating, total_rating_count, category, platforms.name, platforms.abbreviation, genres.name, themes.name, involved_companies.company.name, involved_companies.developer, involved_companies.publisher, screenshots.image_id, artworks.image_id;
-where total_rating_count > 0${genreFilter}${themeFilter}${platformFilter}${ratingFilter};
+where total_rating_count > 0${genreFilter}${themeFilter}${platformFilter}${ratingFilter}${recentFilter};
 sort ${sortField};
 limit 50;
 offset ${offset};`

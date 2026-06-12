@@ -74,6 +74,53 @@ export async function getGamesByAvgPlaytime(
   }))
 }
 
+export interface PopularReview {
+  id: string
+  user_id: string
+  rating: number | null
+  review: string
+  updated_at: string
+  platform: string | null
+  time_to_finish_minutes: number | null
+  likeCount: number
+  profiles: Profile
+  games: { id: number; name: string; cover_image_id: string | null; first_release_date: number | null }
+}
+
+export async function getPopularReviewsThisWeek(limit = 5): Promise<PopularReview[]> {
+  const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+
+  const { data, error } = await supabase
+    .from('game_entries')
+    .select(
+      'id, user_id, rating, review, updated_at, platform, time_to_finish_minutes, profiles!game_entries_user_id_fkey(*), games(id, name, cover_image_id, first_release_date)',
+    )
+    .not('review', 'is', null)
+    .neq('review', '')
+    .gte('updated_at', weekAgo)
+
+  if (error) throw error
+
+  const rows = (data ?? []) as unknown as Omit<PopularReview, 'likeCount'>[]
+  if (rows.length === 0) return []
+
+  const entryIds = rows.map((r) => r.id)
+  const { data: likes, error: likesError } = await supabase
+    .from('review_likes')
+    .select('entry_id')
+    .in('entry_id', entryIds)
+
+  if (likesError) throw likesError
+
+  const likeCounts = new Map<string, number>()
+  for (const l of likes ?? []) likeCounts.set(l.entry_id, (likeCounts.get(l.entry_id) ?? 0) + 1)
+
+  return rows
+    .map((r) => ({ ...r, likeCount: likeCounts.get(r.id) ?? 0 }))
+    .sort((a, b) => b.likeCount - a.likeCount || new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
+    .slice(0, limit)
+}
+
 export interface GameDetailStats {
   avgRating: number | null
   ratingCount: number

@@ -1,8 +1,26 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { browseGames } from '../lib/igdb'
+import { getPopularReviewsThisWeek, type PopularReview } from '../lib/games'
+import { coverUrl } from '../lib/igdb'
+import { ReviewCard } from '../components/ReviewCard'
+import type { IgdbGame } from '../types/igdb'
 
 export function Landing() {
   const { user } = useAuth()
+  const [recentGames, setRecentGames] = useState<IgdbGame[]>([])
+  const [popularReviews, setPopularReviews] = useState<PopularReview[]>([])
+
+  useEffect(() => {
+    browseGames('recent', 0)
+      .then((g) => setRecentGames(g.slice(0, 6)))
+      .catch(() => {})
+
+    getPopularReviewsThisWeek(5)
+      .then(setPopularReviews)
+      .catch(() => {})
+  }, [])
 
   return (
     <div className="max-w-7xl mx-auto px-4">
@@ -15,14 +33,7 @@ export function Landing() {
           playing. Like Letterboxd, but for games.
         </p>
 
-        {user ? (
-          <Link
-            to="/search"
-            className="inline-block bg-accent text-bg font-semibold px-6 py-3 rounded-lg hover:opacity-90 transition-opacity"
-          >
-            Find a game to log
-          </Link>
-        ) : (
+        {!user && (
           <div className="flex items-center justify-center gap-3">
             <Link
               to="/signup"
@@ -40,26 +51,58 @@ export function Landing() {
         )}
       </section>
 
-      <section className="grid sm:grid-cols-3 gap-6 pb-24 text-center">
-        <div className="bg-surface rounded-lg p-6">
-          <h2 className="font-semibold mb-2">Log your library</h2>
-          <p className="text-text-muted text-sm">
-            Mark games as finished, in progress, or on your backlog.
-          </p>
-        </div>
-        <div className="bg-surface rounded-lg p-6">
-          <h2 className="font-semibold mb-2">Rate &amp; review</h2>
-          <p className="text-text-muted text-sm">
-            Give every game a rating out of 10 and write your thoughts.
-          </p>
-        </div>
-        <div className="bg-surface rounded-lg p-6">
-          <h2 className="font-semibold mb-2">Follow friends</h2>
-          <p className="text-text-muted text-sm">
-            See what your friends are finishing and what they think of it.
-          </p>
-        </div>
-      </section>
+      {recentGames.length > 0 && (
+        <section className="pb-16">
+          <h2 className="text-lg font-bold mb-4">Latest releases</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+            {recentGames.map((game) => (
+              <Link
+                key={game.id}
+                to={`/game/${game.id}`}
+                className="group relative aspect-[3/4] rounded-lg overflow-hidden bg-surface ring-1 ring-white/5 block transition-all hover:ring-accent"
+              >
+                {game.cover ? (
+                  <img
+                    src={coverUrl(game.cover.image_id)}
+                    alt={game.name}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-xs text-text-muted p-1 text-center">
+                    {game.name}
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors flex items-center justify-center p-2 opacity-0 group-hover:opacity-100">
+                  <span className="text-white text-sm font-semibold text-center leading-tight">{game.name}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {popularReviews.length > 0 && (
+        <section className="pb-24">
+          <h2 className="text-lg font-bold mb-4">Popular reviews this week</h2>
+          <div className="flex flex-col gap-4">
+            {popularReviews.map((r) => (
+              <ReviewCard
+                key={r.id}
+                entryId={r.id}
+                game={r.games}
+                rating={r.rating}
+                review={r.review}
+                date={r.updated_at}
+                author={r.profiles}
+                platform={r.platform}
+                timeToFinishMinutes={r.time_to_finish_minutes}
+                likeCount={r.likeCount}
+              />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   )
 }
