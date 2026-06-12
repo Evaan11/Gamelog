@@ -19,6 +19,8 @@ import { ProfileLists } from './pages/profile/ProfileLists'
 import { ListDetail } from './pages/ListDetail'
 import { Settings } from './pages/Settings'
 import { SteamCallback } from './pages/SteamCallback'
+import { Legal } from './pages/Legal'
+import { Footer } from './components/Footer'
 
 function App() {
   return (
@@ -47,8 +49,10 @@ function App() {
           <Route path="/list/:id" element={<ListDetail />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/steam-callback" element={<SteamCallback />} />
+          <Route path="/legal" element={<Legal />} />
         </Routes>
       </main>
+      <Footer />
     </div>
   )
 }
