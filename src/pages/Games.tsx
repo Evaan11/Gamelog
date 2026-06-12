@@ -13,7 +13,7 @@ const SORT_LABELS: Record<BrowseSort, string> = {
   top_rated: 'Top rated',
 }
 
-const SORT_OPTIONS: BrowseSort[] = ['popular', 'alphabetical', 'top_rated']
+const SORT_OPTIONS: BrowseSort[] = ['popular', 'top_rated', 'alphabetical']
 const PAGE_SIZE = 50
 
 function MultiSelect({
