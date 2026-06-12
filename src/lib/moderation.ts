@@ -12,7 +12,7 @@ export async function reportReview(reporterId: string, entryId: string, reason: 
     reason,
   })
   if (error) throw error
-  notifyAdmin('Groscaca: review reported', `Reporter: ${reporterId}\nReview entry: ${entryId}\nReason: ${reason}`)
+  notifyAdmin('Gamelog: review reported', `Reporter: ${reporterId}\nReview entry: ${entryId}\nReason: ${reason}`)
 }
 
 export async function reportUser(reporterId: string, userId: string, reason: string): Promise<void> {
@@ -23,14 +23,14 @@ export async function reportUser(reporterId: string, userId: string, reason: str
     reason,
   })
   if (error) throw error
-  notifyAdmin('Groscaca: user reported', `Reporter: ${reporterId}\nReported user: ${userId}\nReason: ${reason}`)
+  notifyAdmin('Gamelog: user reported', `Reporter: ${reporterId}\nReported user: ${userId}\nReason: ${reason}`)
 }
 
 export async function sendFeedback(userId: string, message: string, isBug: boolean): Promise<void> {
   const { error } = await supabase.from('feedback').insert({ user_id: userId, message, is_bug: isBug })
   if (error) throw error
   notifyAdmin(
-    isBug ? 'Groscaca: bug report' : 'Groscaca: feedback',
+    isBug ? 'Gamelog: bug report' : 'Gamelog: feedback',
     `From user: ${userId}\n\n${message}`,
   )
 }
