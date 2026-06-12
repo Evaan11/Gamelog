@@ -10,9 +10,10 @@ import { getGameStatsBatch, type GameStats } from '../lib/games'
 const SORT_LABELS: Record<BrowseSort, string> = {
   popular: 'Most popular',
   alphabetical: 'Alphabetical',
+  top_rated: 'Top rated',
 }
 
-const SORT_OPTIONS: BrowseSort[] = ['popular', 'alphabetical']
+const SORT_OPTIONS: BrowseSort[] = ['popular', 'alphabetical', 'top_rated']
 const PAGE_SIZE = 50
 
 function MultiSelect({

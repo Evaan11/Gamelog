@@ -38,7 +38,12 @@ Deno.serve(async (req) => {
     const { search, id, steamAppId, igdbIdForSteam, browse } = await req.json()
 
     if (browse) {
-      const sortField = browse.sort === 'alphabetical' ? 'name asc' : 'total_rating_count desc'
+      const sortField =
+        browse.sort === 'alphabetical'
+          ? 'name asc'
+          : browse.sort === 'top_rated'
+            ? 'total_rating desc'
+            : 'total_rating_count desc'
       const offset = Number(browse.offset) || 0
       const token = await getTwitchToken()
       const genreIds = (Array.isArray(browse.genreIds) ? browse.genreIds : []).map(Number).filter(Number.isInteger)
