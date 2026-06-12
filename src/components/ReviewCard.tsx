@@ -31,6 +31,7 @@ interface ReviewCardProps {
   likeCount?: number
   isOwn?: boolean
   onEdit?: () => void
+  onDelete?: () => void
 }
 
 export function ReviewCard({
@@ -45,6 +46,7 @@ export function ReviewCard({
   likeCount: initialLikeCount,
   isOwn,
   onEdit,
+  onDelete,
 }: ReviewCardProps) {
   const { user } = useAuth()
   const navigate = useNavigate()
@@ -155,16 +157,30 @@ export function ReviewCard({
             </button>
             {menuOpen && (
               <div className="absolute right-0 mt-1 w-40 bg-surface border border-white/10 rounded shadow-lg overflow-hidden z-20">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setMenuOpen(false)
-                    setShowReportModal(true)
-                  }}
-                  className="w-full text-left px-3 py-2 text-sm text-text-muted hover:bg-white/5 hover:text-text transition-colors cursor-pointer"
-                >
-                  Report review
-                </button>
+                {isOwn && onDelete && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMenuOpen(false)
+                      onDelete()
+                    }}
+                    className="w-full text-left px-3 py-2 text-sm text-text-muted hover:bg-white/5 hover:text-red-400 transition-colors cursor-pointer"
+                  >
+                    Delete review
+                  </button>
+                )}
+                {!isOwn && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMenuOpen(false)
+                      setShowReportModal(true)
+                    }}
+                    className="w-full text-left px-3 py-2 text-sm text-text-muted hover:bg-white/5 hover:text-text transition-colors cursor-pointer"
+                  >
+                    Report review
+                  </button>
+                )}
               </div>
             )}
           </div>

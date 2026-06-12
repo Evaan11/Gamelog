@@ -78,6 +78,16 @@ export async function upsertEntry(params: {
   if (error) throw error
 }
 
+export async function deleteReview(userId: string, gameId: number): Promise<void> {
+  const { error } = await supabase
+    .from('game_entries')
+    .update({ review: null, updated_at: new Date().toISOString() })
+    .eq('user_id', userId)
+    .eq('game_id', gameId)
+
+  if (error) throw error
+}
+
 export interface CachedGame {
   id: number
   name: string

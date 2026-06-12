@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
-import { getUserEntries, type GameEntryWithGame } from '../../lib/entries'
+import { getUserEntries, deleteReview, type GameEntryWithGame } from '../../lib/entries'
 import { ReviewCard } from '../../components/ReviewCard'
+import { useAuth } from '../../contexts/AuthContext'
 import type { ProfileOutletContext } from './ProfileLayout'
 
 const PAGE_SIZE = 10
 
 export function ProfileReviews() {
   const { profile } = useOutletContext<ProfileOutletContext>()
+  const { user } = useAuth()
   const [entries, setEntries] = useState<GameEntryWithGame[]>([])
   const [visible, setVisible] = useState(PAGE_SIZE)
   const [loading, setLoading] = useState(true)
@@ -46,6 +48,12 @@ export function ProfileReviews() {
           rating={entry.rating}
           review={entry.review!}
           date={entry.updated_at}
+          isOwn={user?.id === profile.id}
+          onDelete={() => {
+            deleteReview(profile.id, entry.games.id).then(() => {
+              setEntries((e) => e.filter((entry2) => entry2.id !== entry.id))
+            })
+          }}
         />
       ))}
       {visible < entries.length && (

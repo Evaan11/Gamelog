@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState, type JSX } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { getGame, coverUrl, getSteamAppIdForGame } from '../lib/igdb'
-import { ensureGameCached, getEntry, upsertEntry, deleteEntry, type GameStatus } from '../lib/entries'
+import { ensureGameCached, getEntry, upsertEntry, deleteEntry, deleteReview, type GameStatus } from '../lib/entries'
 import { getGameStats, getGameDetailStats, getGameReviews, getGameEntryUsers, type GameStats, type GameDetailStats, type GameReview, type GameEntryUser } from '../lib/games'
 import { getFollowing } from '../lib/follows'
 import { UserListModal } from '../components/UserListModal'
@@ -244,6 +244,14 @@ export function GameDetail() {
     } finally {
       setSaving(false)
     }
+  }
+
+  async function handleDeleteReview() {
+    if (!user || !game) return
+    await deleteReview(user.id, game.id)
+    setReview('')
+    const userIds = reviewScope === 'friends' ? [...(followingIds ?? []), user.id] : undefined
+    getGameReviews(game.id, { sort: reviewSort, userIds }).then(setReviews)
   }
 
   function handleReviewModalSave(changes: {
@@ -748,6 +756,7 @@ export function GameDetail() {
                   likeCount={r.likeCount}
                   isOwn={user?.id === r.user_id}
                   onEdit={() => setShowReviewModal(true)}
+                  onDelete={handleDeleteReview}
                 />
               </div>
             ))}
