@@ -29,6 +29,9 @@ export function GameCard({ game, stats, linkSuffix }: { game: IgdbGame; stats?: 
       </div>
       <p className="text-sm font-medium leading-tight truncate">{game.name}</p>
       {year && <p className="text-xs text-text-muted">{year}</p>}
+      {game.total_rating != null && (
+        <p className="text-xs text-text-muted">Rating: {(game.total_rating / 10).toFixed(1)}</p>
+      )}
       {game.platforms && game.platforms.length > 0 && (
         <p className="text-[10px] text-text-muted truncate">
           Platforms: {game.platforms.map((p) => p.abbreviation ?? p.name).join(', ')}
