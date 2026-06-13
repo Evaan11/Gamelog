@@ -54,7 +54,7 @@ export function Navbar() {
           GameLog<span className="text-accent">gd</span>
         </Link>
 
-        <nav className="flex items-center gap-1 sm:gap-4 text-sm min-w-0">
+        <nav className="flex items-center gap-3 sm:gap-4 text-sm min-w-0">
           {user ? (
             <>
               <Link
@@ -62,12 +62,12 @@ export function Navbar() {
                 className="relative text-gray-200 hover:text-white font-bold transition-colors"
                 aria-label="Activity"
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                   <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" />
                   <path d="M13.73 21a2 2 0 0 1-3.46 0" />
                 </svg>
                 {unreadCount > 0 && (
-                  <span className="absolute -top-1.5 -right-2 bg-accent text-bg text-[10px] font-bold rounded-full min-w-[16px] h-4 px-1 flex items-center justify-center">
+                  <span className="absolute -top-1.5 -right-2.5 bg-accent text-bg text-[10px] font-bold rounded-full min-w-[17px] h-[17px] px-1 flex items-center justify-center">
                     {unreadCount > 9 ? '9+' : unreadCount}
                   </span>
                 )}
@@ -82,7 +82,7 @@ export function Navbar() {
                   aria-label="Profile menu"
                 >
                   <span className="hidden sm:inline max-w-[18vw] sm:max-w-none truncate">{username ?? 'Profile'}</span>
-                  <svg className="sm:hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                  <svg className="sm:hidden" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                     <circle cx="12" cy="7" r="4" />
                   </svg>
@@ -159,7 +159,7 @@ export function Navbar() {
               </Link>
 
               <Link to="/search" className="flex items-center gap-1.5 text-gray-200 hover:text-white font-bold transition-colors" aria-label="Search">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="11" cy="11" r="8" />
                   <line x1="21" y1="21" x2="16.65" y2="16.65" />
                 </svg>
@@ -168,9 +168,9 @@ export function Navbar() {
 
               <Link
                 to="/search"
-                className="flex items-center gap-1.5 bg-accent text-bg font-bold px-2 sm:px-3 py-1.5 rounded text-sm hover:opacity-90 transition-opacity shrink-0"
+                className="flex items-center gap-1.5 bg-accent text-bg font-bold px-3 py-2 rounded text-sm hover:opacity-90 transition-opacity shrink-0"
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
                   <line x1="12" y1="5" x2="12" y2="19" />
                   <line x1="5" y1="12" x2="19" y2="12" />
                 </svg>
