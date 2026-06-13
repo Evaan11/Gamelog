@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { setRememberMe } from '../lib/supabase'
+import { PasswordInput } from '../components/PasswordInput'
 
 export function Login() {
   const { signIn } = useAuth()
@@ -50,9 +51,8 @@ export function Login() {
           <label className="block text-sm text-text-muted mb-1" htmlFor="password">
             Password
           </label>
-          <input
+          <PasswordInput
             id="password"
-            type="password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}

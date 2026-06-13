@@ -20,6 +20,7 @@ import { ListDetail } from './pages/ListDetail'
 import { Settings } from './pages/Settings'
 import { SteamCallback } from './pages/SteamCallback'
 import { Legal } from './pages/Legal'
+import { Confirmed } from './pages/Confirmed'
 import { Footer } from './components/Footer'
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
           <Route path="/settings" element={<Settings />} />
           <Route path="/steam-callback" element={<SteamCallback />} />
           <Route path="/legal" element={<Legal />} />
+          <Route path="/confirmed" element={<Confirmed />} />
         </Routes>
       </main>
       <Footer />

@@ -3,6 +3,7 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { getProfile, updateProfile, updateUsername, displayName as profileDisplayName, type Profile } from '../lib/profiles'
 import { supabase } from '../lib/supabase'
+import { PasswordInput } from '../components/PasswordInput'
 import { getSteamLoginUrl, getSteamLibrary, getSteamWishlist } from '../lib/steam'
 import { getGameBySteamAppId } from '../lib/igdb'
 import { ensureGameCached, importSteamEntry, importWishlistEntry, resetAccount, resetWishlist, resetSteamLibrary } from '../lib/entries'
@@ -715,22 +716,19 @@ export function Settings() {
         <div className="border-t border-white/10 pt-5 mt-5">
           <label className="block text-sm text-text-muted mb-1">Change password</label>
           <div className="flex flex-col gap-2">
-            <input
-              type="password"
+            <PasswordInput
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
               placeholder="Current password"
               className="w-full bg-surface rounded px-3 py-2 text-sm border border-white/10 focus:outline-none focus:border-accent"
             />
-            <input
-              type="password"
+            <PasswordInput
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="New password"
               className="w-full bg-surface rounded px-3 py-2 text-sm border border-white/10 focus:outline-none focus:border-accent"
             />
-            <input
-              type="password"
+            <PasswordInput
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirm new password"
@@ -771,8 +769,7 @@ export function Settings() {
                 This will permanently delete all your games, ratings, reviews and lists, but keep your account and
                 profile. This cannot be undone.
               </p>
-              <input
-                type="password"
+              <PasswordInput
                 value={resetPassword}
                 onChange={(e) => setResetPassword(e.target.value)}
                 placeholder="Enter your password to confirm"
@@ -818,8 +815,7 @@ export function Settings() {
               <p className="text-sm text-text-muted">
                 This will permanently delete your account and all your data. This cannot be undone.
               </p>
-              <input
-                type="password"
+              <PasswordInput
                 value={deletePassword}
                 onChange={(e) => setDeletePassword(e.target.value)}
                 placeholder="Enter your password to confirm"
