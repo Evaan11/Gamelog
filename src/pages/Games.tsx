@@ -5,9 +5,9 @@ import { GENRES, THEMES, PLATFORMS } from '../lib/filters'
 import { StarRating } from '../components/StarRating'
 import type { IgdbGame } from '../types/igdb'
 import { GameCard } from '../components/GameCard'
-import { getGameStatsBatch, getGamesByAvgPlaytime, type GameStats } from '../lib/games'
+import { getGameStatsBatch, getGamesByAvgPlaytime, getGamesByReviewCount, type GameStats } from '../lib/games'
 
-type SortOption = BrowseSort | 'avg_playtime'
+type SortOption = BrowseSort | 'avg_playtime' | 'most_reviews'
 
 const SORT_LABELS: Record<SortOption, string> = {
   popular: 'Most popular',
@@ -15,9 +15,10 @@ const SORT_LABELS: Record<SortOption, string> = {
   top_rated: 'Top rated',
   avg_playtime: 'Avg playtime',
   recent: 'Recent',
+  most_reviews: 'Most reviews',
 }
 
-const SORT_OPTIONS: SortOption[] = ['popular', 'top_rated', 'avg_playtime', 'alphabetical']
+const SORT_OPTIONS: SortOption[] = ['popular', 'top_rated', 'most_reviews', 'avg_playtime', 'alphabetical']
 const PAGE_SIZE = 50
 
 function MultiSelect({
@@ -141,7 +142,13 @@ export function Games() {
             if (!cancelled) setAvgPlaytimes(playtimes)
             return rows.map((r) => byId.get(r.gameId)).filter((g): g is IgdbGame => g != null)
           })
-        : browseGames(sort, page * PAGE_SIZE, { genreIds, themeIds, platformIds, minRating })
+        : sort === 'most_reviews'
+          ? getGamesByReviewCount(page * PAGE_SIZE, PAGE_SIZE).then(async (rows) => {
+              const fetched = await getGamesByIds(rows.map((r) => r.gameId))
+              const byId = new Map(fetched.map((g) => [g.id, g]))
+              return rows.map((r) => byId.get(r.gameId)).filter((g): g is IgdbGame => g != null)
+            })
+          : browseGames(sort, page * PAGE_SIZE, { genreIds, themeIds, platformIds, minRating })
 
     if (sort !== 'avg_playtime') setAvgPlaytimes(new Map())
 
@@ -215,7 +222,7 @@ export function Games() {
             ))}
           </select>
 
-          {sort !== 'avg_playtime' && (
+          {sort !== 'avg_playtime' && sort !== 'most_reviews' && (
             <>
           <MultiSelect
             label="All genres"

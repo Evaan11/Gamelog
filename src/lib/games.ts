@@ -74,6 +74,18 @@ export async function getGamesByAvgPlaytime(
   }))
 }
 
+export async function getGamesByReviewCount(
+  offset: number,
+  limit: number,
+): Promise<{ gameId: number; reviewCount: number }[]> {
+  const { data, error } = await supabase.rpc('games_by_review_count', { p_limit: limit, p_offset: offset })
+  if (error) throw error
+  return (data ?? []).map((row: { game_id: number; review_count: number }) => ({
+    gameId: row.game_id,
+    reviewCount: row.review_count,
+  }))
+}
+
 export interface PopularReview {
   id: string
   user_id: string
