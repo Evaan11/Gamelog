@@ -81,8 +81,12 @@ export function Navbar() {
                   className="flex items-center gap-1 text-gray-200 hover:text-white font-bold transition-colors cursor-pointer min-w-0"
                   aria-label="Profile menu"
                 >
-                  <span className="max-w-[18vw] sm:max-w-none truncate">{username ?? 'Profile'}</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                  <span className="hidden sm:inline max-w-[18vw] sm:max-w-none truncate">{username ?? 'Profile'}</span>
+                  <svg className="sm:hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                  <svg className="hidden sm:inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="6 9 12 15 18 9" />
                   </svg>
                 </button>
@@ -149,7 +153,7 @@ export function Navbar() {
                     navigate(0)
                   }
                 }}
-                className="text-gray-200 hover:text-white font-bold transition-colors"
+                className="hidden sm:inline text-gray-200 hover:text-white font-bold transition-colors"
               >
                 Games
               </Link>
@@ -170,7 +174,7 @@ export function Navbar() {
                   <line x1="12" y1="5" x2="12" y2="19" />
                   <line x1="5" y1="12" x2="19" y2="12" />
                 </svg>
-                <span className="hidden sm:inline">Log</span>
+                Log
               </Link>
             </>
           ) : (
