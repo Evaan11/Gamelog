@@ -55,8 +55,12 @@ export async function getSteamAppIdForGame(igdbId: number): Promise<string | nul
   return data?.appId ?? null
 }
 
-export function coverUrl(imageId: string, size: 'cover_small' | 'cover_big' | 'screenshot_huge' = 'cover_big') {
-  return `https://images.igdb.com/igdb/image/upload/t_${size}/${imageId}.jpg`
+export function coverUrl(
+  imageId: string,
+  size: 'cover_small' | 'cover_big' | 'screenshot_huge' | '1080p' = 'cover_big',
+) {
+  const igdbSize = size === 'cover_big' ? '1080p' : size
+  return `https://images.igdb.com/igdb/image/upload/t_${igdbSize}/${imageId}.jpg`
 }
 
 export type BrowseSort = 'popular' | 'alphabetical' | 'top_rated' | 'recent'
