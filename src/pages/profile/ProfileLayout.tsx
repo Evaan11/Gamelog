@@ -223,14 +223,14 @@ export function ProfileLayout() {
         )}
       </div>
 
-      <nav className="flex gap-1 border-b border-white/10 mb-8">
+      <nav className="flex gap-1 border-b border-white/10 mb-8 overflow-x-auto whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {TABS.map((tab) => (
           <NavLink
             key={tab.to}
             to={tab.to}
             end={tab.end}
             className={({ isActive }) =>
-              `px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+              `shrink-0 px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
                 isActive
                   ? 'border-accent text-text'
                   : 'border-transparent text-text-muted hover:text-text'
