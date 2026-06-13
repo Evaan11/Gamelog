@@ -49,12 +49,12 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-10">
-      <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between gap-6">
-        <Link to="/" className="font-bold text-3xl tracking-tight">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 h-14 flex items-center justify-between gap-2 sm:gap-6">
+        <Link to="/" className="font-bold text-xl sm:text-3xl tracking-tight shrink-0">
           GameLog<span className="text-accent">gd</span>
         </Link>
 
-        <nav className="flex items-center gap-4 text-sm">
+        <nav className="flex items-center gap-2 sm:gap-4 text-sm">
           {user ? (
             <>
               <Link
@@ -159,12 +159,12 @@ export function Navbar() {
                   <circle cx="11" cy="11" r="8" />
                   <line x1="21" y1="21" x2="16.65" y2="16.65" />
                 </svg>
-                Search
+                <span className="hidden sm:inline">Search</span>
               </Link>
 
               <Link
                 to="/search"
-                className="flex items-center gap-1.5 bg-accent text-bg font-bold px-3 py-1.5 rounded text-sm hover:opacity-90 transition-opacity"
+                className="flex items-center gap-1.5 bg-accent text-bg font-bold px-2 sm:px-3 py-1.5 rounded text-sm hover:opacity-90 transition-opacity shrink-0"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
                   <line x1="12" y1="5" x2="12" y2="19" />
@@ -183,24 +183,24 @@ export function Navbar() {
                     navigate(0)
                   }
                 }}
-                className="text-gray-200 hover:text-white font-bold transition-colors"
+                className="text-gray-200 hover:text-white font-bold transition-colors shrink-0"
               >
                 Games
               </Link>
 
-              <Link to="/search" className="flex items-center gap-1.5 text-gray-200 hover:text-white font-bold transition-colors" aria-label="Search">
+              <Link to="/search" className="flex items-center gap-1.5 text-gray-200 hover:text-white font-bold transition-colors shrink-0" aria-label="Search">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="11" cy="11" r="8" />
                   <line x1="21" y1="21" x2="16.65" y2="16.65" />
                 </svg>
-                Search
+                <span className="hidden sm:inline">Search</span>
               </Link>
-              <Link to="/login" className="text-gray-200 hover:text-white font-bold transition-colors">
+              <Link to="/login" className="text-gray-200 hover:text-white font-bold transition-colors shrink-0">
                 Sign in
               </Link>
               <Link
                 to="/signup"
-                className="bg-accent text-bg font-bold px-3 py-1.5 rounded hover:opacity-90 transition-opacity"
+                className="bg-accent text-bg font-bold px-2 sm:px-3 py-1.5 rounded hover:opacity-90 transition-opacity shrink-0"
               >
                 Sign up
               </Link>
