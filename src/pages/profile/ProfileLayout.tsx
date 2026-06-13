@@ -223,7 +223,7 @@ export function ProfileLayout() {
         )}
       </div>
 
-      <nav className="flex gap-1 border-b border-white/10 mb-8 overflow-x-auto whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <nav className="flex gap-1 border-b border-white/10 mb-8 overflow-x-auto touch-pan-x whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {TABS.map((tab) => (
           <NavLink
             key={tab.to}
