@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#14181c"/>
+  <rect x="80" y="125" width="380" height="380" rx="64" fill="#0c0f12"/>
+  <text x="270" y="385" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="260" fill="#00e054">G</text>
+  <text x="520" y="300" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="86" fill="#ffffff">GameLoggd</text>
+  <text x="522" y="370" font-family="Arial, Helvetica, sans-serif" font-size="36" fill="#9ab" >Track every game you play.</text>
+  <text x="522" y="420" font-family="Arial, Helvetica, sans-serif" font-size="36" fill="#9ab">Rate, review, and share with friends.</text>
+</svg>
