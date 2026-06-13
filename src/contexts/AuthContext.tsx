@@ -19,16 +19,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
+      checkProfileExists(data.session)
       setSession(data.session)
       setLoading(false)
     })
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      checkProfileExists(newSession)
       setSession(newSession)
     })
 
     return () => listener.subscription.unsubscribe()
   }, [])
+
+  async function checkProfileExists(currentSession: Session | null) {
+    if (!currentSession) return
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('id', currentSession.user.id)
+      .maybeSingle()
+    if (!error && !data) {
+      await supabase.auth.signOut()
+      setSession(null)
+    }
+  }
 
   async function signUp(email: string, password: string, username: string, displayName?: string) {
     const { error } = await supabase.auth.signUp({
